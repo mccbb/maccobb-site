@@ -1,0 +1,635 @@
+/* ------------------------------------------------------------------
+   maccobb.com
+
+   Structure, spacing and colour follow the reference portfolio
+   (abdussalam.pk) as measured at 1440px: a 12-column grid with 45px
+   margins and 30px gutters (115px column pitch), a fixed white header,
+   giant centred serif section titles at 14vw, hairline-ruled case
+   rows, and full-width colour bands (green, black).
+   Fonts are free stand-ins for the reference's licensed Elza (body)
+   and Gallient (display): Instrument Sans and Fraunces.
+   ------------------------------------------------------------------ */
+
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("fonts/instrument-sans-latin-wght-normal.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("fonts/fraunces-latin-opsz-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ink: #141414;
+  --text: #18191a;
+  --white: #fff;
+  --line: #e0e0e0;
+  --rule: #292a2c;
+  --green: #192e2b;
+  --yellow: #ffd300;
+  --muted-on-green: #bdc5c4;
+  --dim: #a5a5a5;
+
+  --sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+
+  --pad: 45px;
+  --gap: 30px;
+  --hdr: 45px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, p, ul, figure { margin: 0; padding: 0; }
+ul { list-style: none; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; height: auto; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.skip {
+  position: fixed;
+  left: var(--pad);
+  top: 8px;
+  z-index: 100;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 14px;
+  transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
+
+.wrap {
+  width: 100%;
+  padding-inline: var(--pad);
+}
+
+.u {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   Header (fixed, white, 45px)
+   --------------------------------------------------------------- */
+
+.hdr {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: var(--hdr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--pad);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.hdr-mark { font-weight: 500; }
+.hdr-nav { display: flex; gap: 64px; }
+
+/* ---------------------------------------------------------------
+   Hero
+   --------------------------------------------------------------- */
+
+/* One viewport tall, cards pinned to the bottom: the section titles below always start
+   fully under the fold, so a title's ascenders never peek into the first screen. */
+.first {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin-bottom: 58px;
+}
+
+.hero {
+  padding-top: 168px;
+  padding-bottom: 48px;
+}
+
+.hero-id {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.hero-lead {
+  max-width: 660px;
+  margin-top: 26px;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 40px;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+}
+
+.jump {
+  margin-top: 22px;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--ink);
+}
+
+.jump li + li { margin-top: 4px; }
+
+.jump a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   Cards: two 400 x 158 tiles, centred, 20px apart
+   --------------------------------------------------------------- */
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: auto;
+  padding: 0 var(--pad) 40px;
+}
+
+.card {
+  display: flex;
+  gap: 15px;
+  width: 400px;
+  height: 158px;
+  padding: 15px;
+  background: #fcfcfc;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: border-color 150ms ease, transform 160ms var(--ease-out);
+}
+
+.card:active { transform: scale(0.985); }
+
+.card-thumb {
+  flex: none;
+  align-self: flex-start;
+  width: 150px;
+  height: 112px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #0f0f0d;
+}
+
+.card-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.2px;
+}
+
+.card-desc {
+  font-size: 14px;
+  line-height: 18.667px;
+}
+
+/* ---------------------------------------------------------------
+   Section titles: 14vw, centred
+   --------------------------------------------------------------- */
+
+.band { position: relative; }
+
+.title {
+  height: 1.195em;
+  padding-top: 0.06em;
+  font-family: var(--serif);
+  font-size: 14vw;
+  font-weight: 300;
+  font-variation-settings: "opsz" 144;
+  line-height: 0.9;
+  letter-spacing: 0.004em;
+  text-align: center;
+  color: var(--text);
+  overflow: visible;
+}
+
+/* Bands that carry content below the title */
+.band:not(.band--first) { padding-top: 94px; }
+.band:not(.band--first) .title { margin-bottom: 125px; }
+
+.band--first .title { margin-bottom: 46px; }
+
+/* ---------------------------------------------------------------
+   Case rows (hairline, three columns, then media)
+   --------------------------------------------------------------- */
+
+.case { margin-bottom: 96px; }
+.case:last-child { margin-bottom: 0; }
+
+/* Half and half: text in one column, image in the other. Every other case flips. */
+.case-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  align-items: start;
+  padding-top: 15px;
+  border-top: 1px solid var(--text);
+}
+
+.case-text { grid-column: 1 / span 6; grid-row: 1; }
+.case .media { grid-column: 7 / -1; grid-row: 1; }
+
+.case--flip .media { grid-column: 1 / span 6; }
+.case--flip .case-text { grid-column: 7 / -1; }
+
+.case h3,
+.case h4,
+.stat h3,
+.feat h3,
+.foot h3 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.case-text > p { max-width: 390px; margin-top: 6px; }
+
+/* Role and Website sit side by side under the summary */
+.case-meta {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  column-gap: var(--gap);
+  margin-top: 40px;
+}
+
+.case-meta p,
+.case-meta a { margin-top: 6px; display: block; }
+
+.case-meta a {
+  width: fit-content;
+  line-height: 24px;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1800 / 958;
+  background: #f2f2f0;
+  overflow: hidden;
+}
+
+.media img { width: 100%; height: 100%; object-fit: cover; }
+
+.media--panel {
+  display: grid;
+  place-items: center;
+  background: #f2f2f0;
+}
+
+.media--panel span {
+  font-family: var(--serif);
+  font-size: 3.6vw;
+  font-weight: 300;
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.01em;
+  color: var(--display-dim, #8a8b8d);
+}
+
+/* ---------------------------------------------------------------
+   Two-column content rows: text left, everything else from col 7
+   --------------------------------------------------------------- */
+
+.two {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+.two-left { grid-column: 1 / span 6; }
+.two-right { grid-column: 7 / -1; }
+
+.lead {
+  max-width: 545px;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.022em;
+}
+
+.lead--yellow { color: var(--yellow); }
+
+.pill {
+  display: inline-block;
+  margin-top: 29px;
+  padding: 18px 28px;
+  border: 1px solid #282828;
+  border-radius: 75px;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--ink);
+  transition: transform 160ms var(--ease-out), background-color 160ms ease, color 160ms ease;
+}
+
+.pill:active { transform: scale(0.97); }
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+.stats { row-gap: 64px; }
+.stat h3,
+.stat p:not(.stat-n) { max-width: 235px; }
+
+.stat-n {
+  font-size: clamp(64px, 7.8vw, 112px);
+  line-height: 1.0715;
+  letter-spacing: -0.03em;
+}
+
+.stat h3 { margin-top: -2px; font-weight: 600; }
+.stat h3 + p { margin-top: 8px; line-height: 22px; }
+.stat-link { display: inline-block; margin-top: 10px; }
+
+/* ---------------------------------------------------------------
+   Writing: green band
+   --------------------------------------------------------------- */
+
+.band--green {
+  margin-top: 83px;
+  padding-bottom: 108px;
+  background: var(--green);
+  color: var(--white);
+}
+
+.band--green .title { color: var(--white); }
+
+.sticky {
+  position: sticky;
+  top: 96px;
+  align-self: start;
+}
+
+.muted {
+  max-width: 246px;
+  margin-top: 22px;
+  color: var(--muted-on-green);
+}
+
+.feat + .feat { margin-top: 46px; }
+
+.feat h3 { color: var(--white); }
+
+.feat p {
+  max-width: 385px;
+  margin-top: 6px;
+  color: var(--muted-on-green);
+}
+
+.feat p a {
+  color: var(--white);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.feat-media {
+  display: block;
+  margin-top: 15px;
+  width: 100%;
+  aspect-ratio: 660 / 421;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.feat-media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+.feat-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 32px;
+  color: var(--text);
+}
+
+.feat-cover-t {
+  max-width: 11em;
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.1vw, 46px);
+  font-weight: 300;
+  font-variation-settings: "opsz" 144;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.feat-cover-s {
+  margin-top: 12px;
+  font-size: 15px;
+  color: #55575a;
+}
+
+/* ---------------------------------------------------------------
+   Footer (black)
+   --------------------------------------------------------------- */
+
+.foot {
+  padding: 87px 0 68px;
+  background: #000;
+  color: var(--white);
+}
+
+.foot h3 { font-weight: 600; line-height: 25px; }
+
+.foot-p {
+  max-width: 272px;
+  margin-top: 7px;
+  color: var(--dim);
+}
+
+.foot .two-left { grid-column: 1 / -1; }
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.pill--dark {
+  margin-top: 0;
+  border-color: #282828;
+  color: var(--dim);
+}
+
+.foot-links {
+  margin-top: 67px;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.foot-links span {
+  margin-inline: 9px;
+  color: #a3a3a3;
+}
+
+/* ---------------------------------------------------------------
+   Back-to-top chevron
+   --------------------------------------------------------------- */
+
+.totop {
+  position: fixed;
+  right: 49px;
+  bottom: 48px;
+  z-index: 40;
+  color: #fff;
+  mix-blend-mode: difference;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.totop[data-show] { opacity: 1; pointer-events: auto; }
+
+/* ---------------------------------------------------------------
+   Motion: one page-load fade, hover only where hover exists
+   --------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-in] {
+    animation: rise 600ms var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 70ms + 60ms);
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(8px); }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover { border-color: #b9b9b9; }
+  .pill:hover { background: var(--ink); color: var(--white); }
+  .pill--dark:hover { background: transparent; color: var(--white); border-color: #6b6b6b; }
+  .jump a:hover,
+  .case-meta a:hover,
+  .u:hover,
+  .feat p a:hover { opacity: 0.6; }
+  .foot-links a:hover,
+  .hdr-nav a:hover { opacity: 0.6; }
+  .jump a,
+  .case-meta a,
+  .u,
+  .foot-links a,
+  .hdr-nav a { transition: opacity 150ms ease; }
+}
+
+/* ---------------------------------------------------------------
+   Below 900px: single column, 35px margins, 76px titles
+   --------------------------------------------------------------- */
+
+@media (max-width: 899px) {
+  :root { --pad: 35px; }
+
+  .hdr-nav { display: none; }
+
+  .cards {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0;
+  }
+
+  .first { margin-bottom: 40px; }
+  .card {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    padding: 12px;
+    gap: 12px;
+  }
+  .card-thumb { width: 104px; height: 78px; }
+  .card-body { justify-content: flex-start; gap: 6px; }
+  .card-title { line-height: 22px; }
+
+  .title {
+    height: auto;
+    padding-top: 0;
+    font-size: min(19.5vw, 120px);
+    line-height: 1.05;
+    letter-spacing: -0.026em;
+  }
+
+  .band--first .title { margin-bottom: 40px; }
+  .band:not(.band--first) { padding-top: 64px; }
+  .band:not(.band--first) .title { margin-bottom: 48px; }
+
+  .case { margin-bottom: 56px; }
+
+  /* Stack: text first, then the image, on every case */
+  .case-row { display: block; }
+  .case .media { margin-top: 32px; }
+  .case-meta { display: block; margin-top: 24px; }
+  .case-meta > div + div { margin-top: 24px; }
+
+  .media--panel span { font-size: 9vw; }
+
+  .two { display: block; }
+  .two-right { margin-top: 48px; }
+
+  .sticky { position: static; }
+
+  .stats { grid-template-columns: 1fr; row-gap: 32px; }
+  .stat-n { font-size: 88px; }
+
+
+  .band--green { margin-top: 56px; padding-bottom: 64px; }
+
+
+
+  .foot { padding-top: 64px; }
+  .foot-links { margin-top: 48px; }
+}
